@@ -1,3 +1,10 @@
 {
-	"folders": []
+	"folders": [
+		{
+			"path": "frontend"
+		},
+		{
+			"path": "api-server"
+		}
+	]
 }
