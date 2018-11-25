@@ -1,23 +1,24 @@
 import { getCategories } from "../utils/API";
 
-export const INVALIDATE_REQUEST_CATEGORIES = 'INVALIDATE_REQUEST_CATEGORIES';
+export const CATEGORIES_REQUEST_INVALIDATE = 'CATEGORIES_REQUEST_INVALIDATE';
+export const CATEGORIES_REQUEST = 'CATEGORIES_REQUEST';
+export const CATEGORIES_RECEIVE = 'CATEGORIES_RECEIVE';
+export const CATEGORIES_SELECT_CURRENT = 'CATEGORIES_SELECT_CURRENT'
 export function invalidateRequestCategories() {
   return {
-    type: INVALIDATE_REQUEST_CATEGORIES
+    type: CATEGORIES_REQUEST_INVALIDATE
   };
 }
 
-export const REQUEST_CATEGORIES = 'REQUEST_CATEGORIES';
 function requestCategories() {
   return {
-    type: REQUEST_CATEGORIES
+    type: CATEGORIES_REQUEST
   }
 }
 
-export const RECEIVE_CATEGORIES = 'RECEIVE_CATEGORIES';
 function receiveCategories(categories) {
   return {
-    type: RECEIVE_CATEGORIES,
+    type: CATEGORIES_RECEIVE,
     categories,
     receivedAt: Date.now()
   }
@@ -43,11 +44,18 @@ function shouldFetchCategories(state) {
   return state.didInvalidate;
 }
 
-export function fetchCategoriesIfNeeded() {
+export function handleFetchCategories() {
   return (dispatch, getState) => {
     if (shouldFetchCategories(getState())) {
       return dispatch(fetchCategories());
     } 
     return Promise.resolve();
+  }
+}
+
+export function selectCurrentCategory(categoryId) {
+  return {
+    type: CATEGORIES_SELECT_CURRENT,
+    categoryId
   }
 }

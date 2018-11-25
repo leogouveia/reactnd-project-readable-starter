@@ -1,12 +1,10 @@
-import { showLoading, hideLoading } from "react-redux-loading-bar";
-import { fetchPostsIfNeeded } from "./posts";
-import { fetchCategoriesIfNeeded } from "./categories";
+import { handleFetchPosts } from "./posts";
+import { handleFetchCategories } from "./categories";
 
 export function handleInitialData() {
   return dispatch => {
-    dispatch(showLoading());
-    return dispatch(fetchPostsIfNeeded()).then(() =>
-      dispatch(fetchCategoriesIfNeeded())
+    return dispatch(handleFetchPosts()).then(() =>
+      dispatch(handleFetchCategories())
     );
   };
 }

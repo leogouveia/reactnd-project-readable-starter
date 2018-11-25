@@ -1,30 +1,27 @@
 
-import { showLoading, hideLoading } from "react-redux-loading-bar";
 import { getPosts } from "../utils/API";
 
-export const INVALIDATE_REQUEST_POSTS = 'INVALIDATE_REQUEST_POSTS';
+export const POSTS_INVALIDATE = 'POSTS_INVALIDATE';
+export const POSTS_REQUEST = 'POSTS_REQUEST';
+export const POSTS_RECEIVE = 'POSTS_RECEIVE';
+export const POSTS_FILTER = 'POSTS_FILTER';
+export const POST_ADD = 'POST_ADD';
+
 export function invalidateRequestPosts() {
   return {
-    type: INVALIDATE_REQUEST_POSTS
+    type: POSTS_INVALIDATE
   };
 }
 
-export const REQUEST_POSTS = 'REQUEST_POSTS';
 export function requestPosts() {
   return {
-    type: REQUEST_POSTS
+    type: POSTS_REQUEST
   }
 }
 
-export const RECEIVE_POSTS = 'RECEIVE_POSTS';
-/**
- * 
- * @param {Post[]} posts 
- * @returns {Object}
- */
-export function receivePosts(posts) {
+function receivePosts(posts) {
   const actionObject = {
-    type: RECEIVE_POSTS,
+    type: POSTS_RECEIVE,
     posts,
     receivedAt: Date.now()
   }
@@ -36,7 +33,7 @@ function fetchPosts() {
     dispatch(requestPosts());
     return getPosts()
       .then(posts => {
-        dispatch(receivePosts(posts))
+        dispatch(receivePosts(posts));
       })
   }
 }
@@ -51,7 +48,7 @@ function shouldFetchPosts(state) {
   return state.didInvalidate;
 }
 
-export function fetchPostsIfNeeded() {
+export function handleFetchPosts() {
   return (dispatch, getState) => {
     const tester = shouldFetchPosts(getState());
     if (tester) {
@@ -62,33 +59,27 @@ export function fetchPostsIfNeeded() {
   }
 }
 
-export const ADD_POST = 'ADD_POST';
-/**
- * 
- * @param {Post} post 
- */
 function addPost(post) {
   return {
-    type: ADD_POST,
+    type: POST_ADD,
     post,
   }
 }
 
-/**
- * 
- * @param {string} text 
- * @param {string} replyingTo 
- */
-export function handleAddPost(text, replyingTo) {
-  return (dispatch, getState) => {
-    const { authedUser } = getState();
-    dispatch(showLoading());
-    return addPost({text, author: authedUser, replyingTo})
+export function handleAddPost(text) {
+  return (dispatch) => {
+    return addPost({})
         .then(post => {dispatch(addPost(post))})
         .catch((err) => {
           console.error(err);
           alert('There was an error. Try again.');
         })
-        .finally(() => dispatch(hideLoading()));
+  }
+}
+
+export function filterPosts(category) {
+  return {
+    type: POSTS_FILTER,
+    category
   }
 }

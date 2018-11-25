@@ -1,23 +1,24 @@
 import { getCommentsOfPost } from "../utils/API";
 
-export const INVALIDATE_REQUEST_COMMENTS = 'INVALIDATE_REQUEST_COMMENTS';
+export const COMMENTS_INVALIDATE = 'COMMENTS_INVALIDATE';
+export const COMMENTS_REQUEST = 'COMMENTS_REQUEST';
+export const COMMENTS_RECEIVE = 'COMMENTS_RECEIVE';
+
 export function invalidateRequestComments() {
   return {
-    type: INVALIDATE_REQUEST_COMMENTS
+    type: COMMENTS_INVALIDATE
   }
 }
 
-export const REQUEST_COMMENTS = 'REQUEST_COMMENTS';
 function requestComments() {
   return {
-    type: REQUEST_COMMENTS
+    type: COMMENTS_REQUEST
   }
 }
 
-export const RECEIVE_COMMENTS = 'RECEIVE_COMMENTS';
 function receiveComments(comments) {
   return {
-    type: RECEIVE_COMMENTS,
+    type: COMMENTS_RECEIVE,
     comments,
     receivedAt: Date.now()
   }

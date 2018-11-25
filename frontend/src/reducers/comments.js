@@ -1,4 +1,8 @@
-import { INVALIDATE_REQUEST_COMMENTS, REQUEST_COMMENTS, RECEIVE_COMMENTS } from "../actions/comments";
+import {
+  COMMENTS_INVALIDATE,
+  COMMENTS_REQUEST,
+  COMMENTS_RECEIVE
+} from "../actions/comments";
 
 export default function comments(
   state = {
@@ -9,22 +13,19 @@ export default function comments(
   action
 ) {
   switch (action.type) {
-    case INVALIDATE_REQUEST_COMMENTS:
-      return Object.assign({}, state, {
-        didInvalidate: true
-      });
-    case REQUEST_COMMENTS:
-      return Object.assign({}, state, {
-        isFetching: true
-      });
-    case RECEIVE_COMMENTS:
-      return Object.assign({}, state, {
+    case COMMENTS_INVALIDATE:
+      return { ...state, didInvalidate: true };
+    case COMMENTS_REQUEST:
+      return { ...state, isFetching: true };
+    case COMMENTS_RECEIVE:
+      return {
+        ...state,
         isFetching: false,
         didInvalidate: false,
         items: action.comments,
         lastUpdated: action.receivedAt
-      })
+      };
     default:
-      return state
+      return state;
   }
 }
