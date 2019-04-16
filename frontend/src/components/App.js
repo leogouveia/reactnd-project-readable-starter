@@ -1,14 +1,15 @@
 import React, { Component, Fragment } from "react";
 import PropTypes from "prop-types";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { LoadingBar } from "react-redux-loading-bar";
 import { handleInitialData } from "../actions/shared";
 import { connect } from "react-redux";
 
 import "./App.scss";
 import Navbar from "./Navbar";
-import PostList from "./PostList";
-import CategoryList from "./CategoryList";
+import PostList from "./PostListContainer";
+import CategoryList from "./CategoryListContainer";
+import NewPost from "./NewPost";
 
 class App extends Component {
   static propTypes = {
@@ -26,18 +27,25 @@ class App extends Component {
           <LoadingBar />
           <Navbar />
           <div className="container">
-
-              {this.props.loading === true ? null : (
-                <div className="columns is-widescreen">
-                  <div className="column is-four-fifths">
-                    <Route path="/" exact component={PostList} />
-                    <Route path="/categories/:category" component={PostList} />
-                  </div>
-                  <div className="column">
-                    <CategoryList />
-                  </div>
-                </div>
-              )}
+            {this.props.loading === true ? null : (
+              <Switch>
+                <Route
+                  path={["/", "/categories/:category"]}
+                  exact
+                  render={() => (
+                    <div className="columns is-widescreen">
+                      <div className="column is-four-fifths">
+                        <PostList />
+                      </div>
+                      <div className="column">
+                        <CategoryList />
+                      </div>
+                    </div>
+                  )}
+                />
+                <Route path="/new" component={NewPost} />
+              </Switch>
+            )}
           </div>
         </Fragment>
       </Router>
