@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from "react";
+import React, { Fragment, useLayoutEffect } from "react";
 import PropTypes from "prop-types";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { LoadingBar } from "react-redux-loading-bar";
@@ -11,46 +11,44 @@ import PostList from "./PostListContainer";
 import CategoryList from "./CategoryListContainer";
 import NewPost from "./NewPost";
 
-class App extends Component {
-  static propTypes = {
-    dispatch: PropTypes.func,
-    loading: PropTypes.any
-  };
-  componentDidMount() {
-    const { dispatch } = this.props;
+function App({ dispatch, loading }) {
+  useLayoutEffect(() => {
     dispatch(handleInitialData());
-  }
-  render() {
-    return (
-      <Router>
-        <Fragment>
-          <LoadingBar />
-          <Navbar />
-          <div className="container">
-            {this.props.loading === true ? null : (
-              <Switch>
-                <Route
-                  path={["/", "/categories/:category"]}
-                  exact
-                  render={() => (
-                    <div className="columns is-widescreen">
-                      <div className="column is-four-fifths">
-                        <PostList />
-                      </div>
-                      <div className="column">
-                        <CategoryList />
-                      </div>
+  });
+  return (
+    <Router>
+      <Fragment>
+        <LoadingBar />
+        <Navbar />
+        <div className="container">
+          {loading === true ? null : (
+            <Switch>
+              <Route
+                path={["/", "/categories/:category"]}
+                exact
+                render={() => (
+                  <div className="columns is-widescreen">
+                    <div className="column is-four-fifths">
+                      <PostList />
                     </div>
-                  )}
-                />
-                <Route path="/new" component={NewPost} />
-              </Switch>
-            )}
-          </div>
-        </Fragment>
-      </Router>
-    );
-  }
+                    <div className="column">
+                      <CategoryList />
+                    </div>
+                  </div>
+                )}
+              />
+              <Route path="/new" component={NewPost} />
+            </Switch>
+          )}
+        </div>
+      </Fragment>
+    </Router>
+  );
 }
+
+App.propTypes = {
+  dispatch: PropTypes.func,
+  loading: PropTypes.any
+};
 
 export default connect()(App);
