@@ -8,7 +8,6 @@ import { connect } from "react-redux";
 import "./App.scss";
 import Navbar from "./Navbar";
 import PostList from "./PostListContainer";
-import CategoryList from "./CategoryListContainer";
 import NewPost from "./NewPost";
 
 function App({ dispatch, loading }) {
@@ -26,16 +25,7 @@ function App({ dispatch, loading }) {
               <Route
                 path={["/", "/categories/:category"]}
                 exact
-                render={() => (
-                  <div className="columns is-widescreen">
-                    <div className="column is-four-fifths">
-                      <PostList />
-                    </div>
-                    <div className="column">
-                      <CategoryList />
-                    </div>
-                  </div>
-                )}
+                component={PostList}
               />
               <Route path="/new" component={NewPost} />
             </Switch>

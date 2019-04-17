@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import ResumedPost from "./ResumedPost";
+import CategoryList from "./CategoryListContainer";
 
 function PostList({ posts, category }) {
   if (category && Array.isArray(posts)) {
@@ -8,19 +9,18 @@ function PostList({ posts, category }) {
   }
   return (
     <div>
-      <div className="hero">
-        <div className="hero-body">
-          <div className="container">
-            <h1 className="title">Hello{category && `, ${category}`}!</h1>
-          </div>
-        </div>
+      <div>
+        <CategoryList />
+      </div>
+      <div>
+        <h1>Hello{category && `, ${category}`}!</h1>
       </div>
 
-      <div className="level">
-        <div className="tile is-ancestor">
+      <div>
+        <div>
           {posts &&
             posts.map(post => (
-              <div className="tile" key={post.id}>
+              <div key={post.id}>
                 <ResumedPost post={post} />
               </div>
             ))}

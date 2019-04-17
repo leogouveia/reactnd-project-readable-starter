@@ -2,27 +2,18 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 function Navbar() {
   return (
-    <nav
-      className="navbar is-black"
-      role="navigation"
-      aria-label="main navigation"
-    >
-      <div className="container">
-        <div className="navbar-menu  is-active">
-          <div className="navbar-start">
-            <NavLink
-              to="/"
-              exact
-              activeClassName="is-active"
-              className="navbar-item"
-            >
+    <nav role="navigation" aria-label="main navigation">
+      <div>
+        <div>
+          <div>
+            <NavLink to="/" exact activeClassName="is-active">
               Home
             </NavLink>
           </div>
-          <div className="navbar-end">
-            <div className="navbar-item">
-              <div className="buttons">
-                <NavLink to="/new" exact className="button is-primary">
+          <div>
+            <div>
+              <div>
+                <NavLink to="/new" exact>
                   Add Post
                 </NavLink>
               </div>

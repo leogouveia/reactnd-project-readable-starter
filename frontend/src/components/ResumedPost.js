@@ -5,16 +5,16 @@ import moment from "moment";
 
 function ResumedPost({ post }) {
   return (
-    <div className="box">
-      <article className="media">
-        <div className="media-content">
-          <div className="content is-small">
+    <div>
+      <article>
+        <div>
+          <div>
             <p>
               <strong>{post.author} </strong>@{" "}
               {moment(post.timestamp).format("MMM Do YY, H:mm")}
             </p>
           </div>
-          <div className="content">
+          <div>
             <p>
               <strong>{post.title}</strong>
               <br />
@@ -22,22 +22,22 @@ function ResumedPost({ post }) {
               {post.body.length >= 100 && "..."}
             </p>
           </div>
-          <div className="level is-mobile">
-            <div className="level-left">
-              <span className="tag">{post.category}</span>
+          <div>
+            <div>
+              <span>{post.category}</span>
             </div>
-            <div className="level-right">
-              <a className="level-item">
-                <span className="icon is-small">
+            <div>
+              <a>
+                <span>
                   {post.voteScore > 0 ? <FaHeart /> : <FaThumbsDown />}
                 </span>
-                <span className="is-small">&nbsp;{post.voteScore}</span>
+                <span>&nbsp;{post.voteScore}</span>
               </a>
-              <a className="level-item">
-                <span className="icon is-small">
+              <a>
+                <span>
                   <FaComments />
                 </span>
-                <span className="is-small">&nbsp;{post.commentCount}</span>
+                <span>&nbsp;{post.commentCount}</span>
               </a>
             </div>
           </div>
