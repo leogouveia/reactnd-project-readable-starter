@@ -1,4 +1,4 @@
-import React, { Fragment, useLayoutEffect } from "react";
+import React, { Fragment, useEffect } from "react";
 import PropTypes from "prop-types";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { LoadingBar } from "react-redux-loading-bar";
@@ -11,9 +11,9 @@ import PostList from "./PostListContainer";
 import NewPost from "./NewPost";
 
 function App({ dispatch, loading }) {
-  useLayoutEffect(() => {
+  useEffect(() => {
     dispatch(handleInitialData());
-  });
+  }, []);
   return (
     <Router>
       <Fragment>
