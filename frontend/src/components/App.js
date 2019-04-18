@@ -9,6 +9,7 @@ import "./App.scss";
 import Navbar from "./Navbar";
 import PostList from "./PostListContainer";
 import NewPost from "./NewPost";
+import ShowPost from "./ShowPostContainer";
 
 function App({ dispatch, loading }) {
   useEffect(() => {
@@ -28,6 +29,7 @@ function App({ dispatch, loading }) {
                 component={PostList}
               />
               <Route path="/new" component={NewPost} />
+              <Route path="/:id" component={ShowPost} />
             </Switch>
           )}
         </div>
