@@ -7,3 +7,35 @@ kbd,
 samp {
   font-family: "Press Start 2P", cursive;
 }
+
+body {
+  padding: 0;
+  margin: 0;
+}
+
+.container {
+  margin: 0 2rem;
+  padding: 0 2rem;
+}
+
+.navbar {
+  width: 100%;
+  margin: 0 0 2rem;
+}
+
+.navbar > .container {
+  width: 95%;
+  display: flex;
+  flex-direction: row;
+}
+
+.navbar > .container > div {
+  margin: 5px;
+  text-align: center;
+  font-size: 1.5em;
+  flex-grow: 0;
+}
+
+.navbar > .container > .end {
+  margin-left: auto;
+}
