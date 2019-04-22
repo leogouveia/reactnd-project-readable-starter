@@ -15,5 +15,8 @@ function ShowPost({ post, comments }) {
     </div>
   );
 }
-
+ShowPost.propTypes = {
+  post: PropTypes.object,
+  comments: PropTypes.array
+};
 export default ShowPost;

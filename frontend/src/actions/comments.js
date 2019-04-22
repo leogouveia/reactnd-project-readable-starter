@@ -1,19 +1,26 @@
 import { getCommentsOfPost } from "../utils/API";
 
-export const COMMENTS_INVALIDATE = 'COMMENTS_INVALIDATE';
-export const COMMENTS_REQUEST = 'COMMENTS_REQUEST';
-export const COMMENTS_RECEIVE = 'COMMENTS_RECEIVE';
+export const COMMENTS_INVALIDATE = "COMMENTS_INVALIDATE";
+export const COMMENTS_REQUEST = "COMMENTS_REQUEST";
+export const COMMENTS_RECEIVE = "COMMENTS_RECEIVE";
+export const COMMENTS_CLEAR = "COMMENTS_CLEAR";
 
 export function invalidateRequestComments() {
   return {
     type: COMMENTS_INVALIDATE
-  }
+  };
 }
 
 function requestComments() {
   return {
     type: COMMENTS_REQUEST
-  }
+  };
+}
+
+export function clearComments() {
+  return {
+    type: COMMENTS_CLEAR
+  };
 }
 
 function receiveComments(comments) {
@@ -21,17 +28,16 @@ function receiveComments(comments) {
     type: COMMENTS_RECEIVE,
     comments,
     receivedAt: Date.now()
-  }
+  };
 }
 
 function fetchComments(postId) {
   return dispatch => {
     dispatch(requestComments());
-    return getCommentsOfPost(postId)
-      .then(res => {
-        dispatch(receiveComments(res.data));
-      })
-  }
+    return getCommentsOfPost(postId).then(res => {
+      dispatch(receiveComments(res.data));
+    });
+  };
 }
 
 function shouldFetchComments(state) {
@@ -51,5 +57,5 @@ export function fetchCommentsIfNeeded(postId) {
     } else {
       return Promise.resolve();
     }
-  }
+  };
 }

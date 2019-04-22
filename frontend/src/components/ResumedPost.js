@@ -1,8 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { FaHeart, FaComments, FaThumbsDown } from "react-icons/fa";
-import moment from "moment";
+import { FaComments } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
+import IconComment from "./IconComment";
 
 function ResumedPost({ post }) {
   return (
@@ -13,7 +13,7 @@ function ResumedPost({ post }) {
             <div>
               <p>
                 <strong>{post.author} </strong>@{" "}
-                {moment(post.timestamp).format("MMM Do YY, H:mm")}
+                {new Date(post.timestamp).toLocaleString()}
               </p>
             </div>
             <div>
@@ -31,13 +31,23 @@ function ResumedPost({ post }) {
               <div>
                 <button>
                   <span>
-                    {post.voteScore > 0 ? <FaHeart /> : <FaThumbsDown />}
+                    {post.voteScore > 0 ? (
+                      <span className="nes-icon is-small heart" />
+                    ) : (
+                      <span
+                        className="nes-icon is-small like"
+                        style={{
+                          transformOrigin: "center center",
+                          transform: "rotate(180deg)"
+                        }}
+                      />
+                    )}
                   </span>
                   <span>&nbsp;{post.voteScore}</span>
                 </button>
                 <button>
                   <span>
-                    <FaComments />
+                    <IconComment />
                   </span>
                   <span>&nbsp;{post.commentCount}</span>
                 </button>

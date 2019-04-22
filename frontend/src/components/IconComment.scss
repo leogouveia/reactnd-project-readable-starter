@@ -1,0 +1,140 @@
+/* prettier-ignore */
+
+$icon-comment-colors: (#000000, #ffffff, #000000);
+$icon-comment: (
+  (0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0),
+  (0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0),
+  (0, 0, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 0, 0),
+  (0, 0, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 0, 0),
+  (1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1),
+  (1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1),
+  (1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1),
+  (1, 1, 2, 2, 2, 2, 2, 1, 1, 2, 2, 2, 1, 1, 2, 2, 2, 1, 1, 2, 2, 2, 2, 2, 1, 1),
+  (1, 1, 2, 2, 2, 2, 2, 1, 1, 2, 2, 2, 1, 1, 2, 2, 2, 1, 1, 2, 2, 2, 2, 2, 1, 1),
+  (0, 0, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 0, 0),
+  (0, 0, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 0, 0),
+  (0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 1, 1, 1, 1, 0, 0, 0, 0),
+  (0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 1, 1, 1, 1, 0, 0, 0, 0),
+  (0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 2, 2, 1, 1, 0, 0, 0, 0, 0, 0),
+  (0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 2, 2, 1, 1, 0, 0, 0, 0, 0, 0),
+  (0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0),
+  (0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0),
+  (0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0)
+);  
+
+
+@mixin pixelize($size, $matrix, $colors, $default-color: null) {
+  $ret: "";
+  $moz: "";
+  @if ($default-color == null) {
+    // count number of each color in matrix and decide main color by highest count
+    $matrix-colors: ();
+    $counts: ();
+    @each $row in $matrix {
+      @each $item in $row {
+        @if $item != 0 {
+          $index: index($matrix-colors, $item);
+          @if not $index {
+            $matrix-colors: append($matrix-colors, $item);
+            $counts: append($counts, 1);
+          } @else {
+            $count: nth($counts, $index) + 1;
+            $counts: set-nth($counts, $index, $count);
+          }
+        }
+      }
+    }
+    // use index of the highest count to get the corresponding matrix color
+    $default-color: nth($colors, nth($matrix-colors, index($counts, max($counts...))));
+  }
+
+
+  @for $i from 1 through length($matrix) {
+    $row: nth($matrix, $i);
+
+    @for $j from 1 through length($row) {
+      $dot: nth($row, $j);
+
+      @if $dot != 0 {
+        @if $ret != "" {
+          $ret: $ret + ",";
+          $moz: $moz + ",";
+        }
+
+        $color: nth($colors, $dot);
+        @if $color == $default-color {
+          $ret: $ret + ($j * $size) + " " + ($i * $size);
+          $moz: $moz + ($j * $size) + " " + ($i * $size) + " 0 0.020em";
+        } @else {
+          $ret: $ret + ($j * $size) + " " + ($i * $size) + " " + $color;
+          $moz: $moz + ($j * $size) + " " + ($i * $size) + " 0 0.020em " + $color;
+        }
+      }
+    }
+  }
+
+  width: $size;
+  height: $size;
+  color: $default-color;
+  box-shadow: unquote($ret);
+
+  // firefox only style
+  @supports (-moz-appearance: meterbar) {
+    box-shadow: unquote($moz);
+  }
+}
+
+
+.my-icon {
+  $default-size: 1px;
+  $icon-size: $default-size * 16;
+
+  position: relative;
+  display: inline-block;
+  width: $icon-size;
+  height: $icon-size;
+  margin-right: $icon-size;
+  margin-bottom: $icon-size;
+
+  // NOTE: Use `transform: scale()` because cannot use font-size less than 10px on Chrome
+  // default 2px
+  transform: scale(2);
+  transform-origin: top left;
+
+  &.is-small {
+    margin: 0;
+    // 1px
+    transform: scale(1);
+  }
+
+  &.is-medium {
+    margin-right: $icon-size * 2;
+    margin-bottom: $icon-size * 2;
+    // 3px
+    transform: scale(3);
+  }
+
+  &.is-large {
+    margin-right: $icon-size * 3;
+    margin-bottom: $icon-size * 3;
+    // 4px
+    transform: scale(4);
+  }
+
+  &::before {
+    position: absolute;
+    top: $default-size * -1;
+    left: $default-size * -1;
+    display: block;
+    content: "";
+    background: transparent;
+  }
+
+  &.comment::before {
+    @include pixelize($default-size, $icon-comment, $icon-comment-colors);
+  }
+
+}
+
+
+

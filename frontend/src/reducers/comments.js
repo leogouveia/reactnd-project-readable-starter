@@ -1,7 +1,8 @@
 import {
   COMMENTS_INVALIDATE,
   COMMENTS_REQUEST,
-  COMMENTS_RECEIVE
+  COMMENTS_RECEIVE,
+  COMMENTS_CLEAR
 } from "../actions/comments";
 
 export default function comments(
@@ -24,6 +25,14 @@ export default function comments(
         didInvalidate: false,
         items: action.comments,
         lastUpdated: action.receivedAt
+      };
+    case COMMENTS_CLEAR:
+      return {
+        ...state,
+        isFetching: false,
+        didInvalidate: false,
+        items: [],
+        lastUpdated: null
       };
     default:
       return state;
